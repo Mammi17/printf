@@ -9,12 +9,12 @@
  * @p: a structure
  * Return: an integer
  */
-int op_c(va_list note, spe *p)
+int op_c(va_list note)
 {
 	int d;
 
 	d = va_arg(note, int);
-	return (obtenir(d, note, p));
+	return (display(c));
 }
 
 /**
@@ -23,21 +23,18 @@ int op_c(va_list note, spe *p)
  * @p: a structure
  * Return: an integer
  */
-int op_de(va_list note, spe *p)
+int op_de(va_list note)
 {
 	unsigned int c, numb, abs, a;
 	int j;
-	char l, b;
-
-	(void)p;
+	char b;
 
 	c = 0;
 	j = va_arg(note, int);
-	l = '-';
 	if (j < 0)
 	{
 		abs = (j * -1);
-		c += display(l);
+		c += display('-');
 	}
 	else
 		abs = j;
@@ -48,7 +45,7 @@ int op_de(va_list note, spe *p)
 		a /= 10;
 		numb *= 10;
 	}
-	while (numb > 0)
+	while (numb >= 1)
 	{
 		b = ((abs / numb) % 10) + '0';
 		c += display(b);
@@ -63,10 +60,10 @@ int op_de(va_list note, spe *p)
  * @p: a structure
  * Return: an integer
  */
-int op_st(va_list note, spe *p)
+int op_st(va_list note)
 {
 	char *string;
-	int j, min = 1, l;
+	int j, l = 0;
 
 	string = va_arg(note, char *);
 	if (string == NULL)
@@ -75,36 +72,10 @@ int op_st(va_list note, spe *p)
 	}
 	for (j = 0; string[j] != '\0'; j++)
 	{
-		j++;
+		_putchar(str[j]);
+		l++
 	}
-	if (p->pre >= 0 && p->pre < j)
-		j = p->pre;
-	if (p->th > j)
-	{
-		if (p->fl & min)
-		{
-			write(1, &string[0], j);
-			l = p->th - j;
-			while (l > 0)
-			{
-				display(' ');
-				l--;
-			}
-			return (p->th);
-		}
-		else
-		{
-			l = p->th - j;
-			while (l > 0)
-			{
-				display(' ');
-				l--;
-			}
-			write(1, &string[0], j);
-			return (p->th);
-		}
-	}
-	return (write(1, string, j));
+	return (l);
 }
 
 /**
@@ -113,13 +84,11 @@ int op_st(va_list note, spe *p)
  * @p: a structure
  * Return: an integer
  */
-int op_t(va_list note, spe *p)
+int op_t(va_list note)
 {
 	int t;
 
-	(void)p;
-
-	t = op_de(note, p);
+	t = op_de(note);
 	return (t);
 }
 
@@ -129,11 +98,9 @@ int op_t(va_list note, spe *p)
  * @p: a structure
  * Return: an integer
  */
-int op_cent(va_list note, spe *p)
+int op_cent(va_list note)
 {
 	char *string;
-
-	(void)p;
 
 	string = "%";
 	if (va_arg(note, int) == *string)

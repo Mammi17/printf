@@ -11,10 +11,7 @@
 
 int _printf(const char *format, ...)
 {
-	int j = 0, c = 0, fun;
-	spe r = SP_INIT;
-	spe *p = &r;
-	drap g;
+	int j = 0, c = 0, (*fun)(va_list);
 	va_list note;
 
 	va_start(note, format);
@@ -22,19 +19,10 @@ int _printf(const char *format, ...)
 	{
 		if (format[0] == '%' && format[1] == '\0')
 			return (-1);
-		while (format && format[j] != '\0')
+		while (format != NULL && format[j] != '\0')
 		{
 			if (format[j] == '%')
 			{
-				/*if (*ac > 0)
-					write(1, &ab, *ac);
-				else
-					*ac = 0;*/
-				p->fl = flag(format[j], &g);
-				p->pre = precision(format, &j, note);
-				p->th = width(format, &j, note);
-				p->ze = size(format, &j);
-
 				if (format[j + 1] == '%')
 				{
 					c += display(format[j]);
@@ -42,14 +30,13 @@ int _printf(const char *format, ...)
 				}
 				else
 				{
-					fun = obtenir(format, note, p);
+					fun = ob_func(format[j + 1]);
 					if (fun != 0)
-						c += fun(note, p);
+						c += fun(note);
 					else
 						c = display(format[j]) + display(format[j + 1]);
 					j += 2;
 				}
-				j++;
 			}
 			else
 			{
@@ -58,5 +45,6 @@ int _printf(const char *format, ...)
 			}
 		} va_end(note);
 		return (c);
-} return (-1);
+	}
+	return (-1);
 }

@@ -6,7 +6,6 @@
 /**
  * op_c - function that print a character
  * @note: an argument
- * @p: a structure
  * Return: an integer
  */
 int op_c(va_list note)
@@ -14,7 +13,7 @@ int op_c(va_list note)
 	int d;
 
 	d = va_arg(note, int);
-	return (display(c));
+	return (display(d));
 }
 
 /**
@@ -63,18 +62,10 @@ int op_de(va_list note)
 int op_st(va_list note)
 {
 	char *string;
-	int j, l = 0;
+	int l = 0;
 
-	string = va_arg(note, char *);
-	if (string == NULL)
-	{
-		string = "(null)";
-	}
-	for (j = 0; string[j] != '\0'; j++)
-	{
-		_putchar(str[j]);
-		l++
-	}
+	string = va_arg(list, char*);
+	l = print((string != NULL) ? string : "(null)");
 	return (l);
 }
 

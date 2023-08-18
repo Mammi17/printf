@@ -8,5 +8,28 @@
  */
 int display(char c)
 {
-	return (write(1, &c, 1));
+	return (buffer(c));
+}
+
+/**
+ * buffer - Save the character in a buffer
+ * @c: Character
+ * Return: 1
+ */
+
+int buffer(char c)
+{
+	static char tab[1024];
+	static int a;
+
+	if (c == -1 || a == 1024)
+	{
+		write(1, tab, a);
+		a = 0;
+	}
+
+	if (c != -1)
+		tab[a++] = c;
+
+	return (1);
 }

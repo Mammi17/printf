@@ -36,6 +36,7 @@ int op_rev_string(va_list);
 /* utils.c */
 int _strcmp(char *str1, char *str2);
 int print(char *);
+int buffer(char c);
 char *op_conv(long int, int);
 
 /* handler.c */
